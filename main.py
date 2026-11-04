@@ -3,6 +3,8 @@ from flask import Flask
 from flask import render_template
 from flask import request
 
+import database_interface
+
 # Global variables
 is_logged_in = False
 
@@ -16,13 +18,21 @@ app = Flask(__name__)
 def index_page():
     global is_logged_in
 
-    # If we receive a POST request, then set is_logged_in to be true
-    # Otherwise set is_logged_in to be false
+    # If we receive a POST request, then attempt to login
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
-        is_logged_in = True
-        print(f"user {email} has logged in with password {password}")
+
+        # Attempt to login with the supplied username and password
+        is_logged_in = database_interface.check_login(email, password)
+
+        # Debug message showing whether login was successful or not
+        if is_logged_in:
+            print(f"user {email} has logged in with password {password}")
+        else:
+            print(f"user {email} has failed to log in with password {password}")
+
+    # Reset logged in to false
     else:
         is_logged_in = False
     return render_template("index.html", logged_in=is_logged_in), 200
