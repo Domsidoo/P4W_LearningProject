@@ -1,23 +1,18 @@
 {% extends 'layout.html' %} {% block content %}
 <div class="container">
+  {% for row in content %}
   <div class="card" style="width: 18rem">
     <img
-      src="https://mccarter.gallerycdn.vsassets.io/extensions/mccarter/start-git-bash/1.2.1/1499505567572/Microsoft.VisualStudio.Services.Icons.Default"
+      src="{{ row[3] }}"
       class="card-img-top"
-      alt="Product image for the Start GIT BASH VSCode extension."
+      alt="Product image for the Start {{ row[0] }} extension."
     />
     <div class="card-body">
-      <h5 class="card-title">Start GIT BASH</h5>
-      <p class="card-text">
-        Adds a bash command to VSCode that allows you to start git-bash in the
-        current workspace&#39;s root folder.
-      </p>
-      <a
-        href="https://marketplace.visualstudio.com/items?itemName=McCarter.start-git-bash"
-        class="btn btn-primary"
-        >Read More</a
-      >
+      <h5 class="card-title">{{ row[0] }}</h5>
+      <p class="card-text">{{ row[2] }}</p>
+      <a href="{{ row[1] }}" class="btn btn-primary">Read More</a>
     </div>
   </div>
+  {% endfor %}
 </div>
 {% endblock %}
